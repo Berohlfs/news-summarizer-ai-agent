@@ -8,10 +8,11 @@ export function ChatWelcome() {
       </div>
       <div className="space-y-2">
         <h2 className="text-2xl font-semibold tracking-tight">
-          What do you want to know about the NBA?
+          News Summarizer
         </h2>
         <p className="text-sm text-muted-foreground">
-          Ask me anything — players, stats, history, trades, and more.
+          Share a news article URL and I will read, summarize, and answer your
+          questions about it.
         </p>
       </div>
     </div>

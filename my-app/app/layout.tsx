@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NBA Specialist",
-  description: "NBA Specialist chatbot by Bernardo Rohlfs",
+  title: "News Summarizer",
+  description: "News Summarizer chatbot by Bernardo Rohlfs",
 };
 
 export default function RootLayout({

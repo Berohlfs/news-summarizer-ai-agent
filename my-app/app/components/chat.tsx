@@ -96,7 +96,7 @@ export function Chat() {
             <span className="absolute bottom-0 right-0 size-2.5 rounded-full border-2 border-background bg-emerald-500" />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-semibold leading-tight">NBA Specialist Chatbot</span>
+            <span className="text-sm font-semibold leading-tight">News Summarizer</span>
             <span className="text-xs text-muted-foreground">Created by Bernardo Rohlfs</span>
           </div>
         </div>
