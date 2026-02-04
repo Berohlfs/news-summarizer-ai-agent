@@ -10,7 +10,7 @@ export function AudioPlayer() {
   if (!currentAudio) return null;
 
   return (
-    <div className="fixed left-4 top-4 z-50 flex items-center gap-2 rounded-xl border bg-background/95 px-3 py-2 shadow-lg backdrop-blur-sm">
+    <div className="fixed right-4 top-3 z-50 flex items-center gap-2 rounded-xl border bg-background/95 px-3 py-2 shadow-lg backdrop-blur-sm">
       {currentAudio.status === "generating" ? (
         <Loader2 className="size-4 animate-spin text-muted-foreground" />
       ) : (

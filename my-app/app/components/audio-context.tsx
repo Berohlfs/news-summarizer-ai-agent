@@ -25,18 +25,16 @@ const AudioCtx = createContext<AudioContextValue | null>(null);
 
 export function AudioProvider({ children }: { children: React.ReactNode }) {
   const [currentAudio, setCurrentAudio] = useState<CurrentAudio | null>(null);
+  const [generatedAudios, setGeneratedAudios] = useState<Map<string, string>>(
+    () => new Map()
+  );
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const objectUrlRef = useRef<string | null>(null);
 
   const cleanup = useCallback(() => {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.removeAttribute("src");
       audioRef.current = null;
-    }
-    if (objectUrlRef.current) {
-      URL.revokeObjectURL(objectUrlRef.current);
-      objectUrlRef.current = null;
     }
   }, []);
 
@@ -45,9 +43,32 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     setCurrentAudio(null);
   }, [cleanup]);
 
+  const playFromUrl = useCallback(
+    (messageId: string, url: string) => {
+      const audio = new Audio(url);
+      audioRef.current = audio;
+
+      audio.addEventListener("ended", () => {
+        cleanup();
+        setCurrentAudio(null);
+      });
+
+      audio.play();
+      setCurrentAudio({ status: "playing", messageId });
+    },
+    [cleanup]
+  );
+
   const requestTTS = useCallback(
     async (messageId: string, text: string) => {
       cleanup();
+
+      const cachedUrl = generatedAudios.get(messageId);
+      if (cachedUrl) {
+        playFromUrl(messageId, cachedUrl);
+        return;
+      }
+
       setCurrentAudio({ status: "generating", messageId });
 
       try {
@@ -64,24 +85,15 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
 
         const blob = await response.blob();
         const url = URL.createObjectURL(blob);
-        objectUrlRef.current = url;
 
-        const audio = new Audio(url);
-        audioRef.current = audio;
-
-        audio.addEventListener("ended", () => {
-          cleanup();
-          setCurrentAudio(null);
-        });
-
-        await audio.play();
-        setCurrentAudio({ status: "playing", messageId });
+        setGeneratedAudios((prev) => new Map(prev).set(messageId, url));
+        playFromUrl(messageId, url);
       } catch {
         cleanup();
         setCurrentAudio(null);
       }
     },
-    [cleanup]
+    [cleanup, generatedAudios, playFromUrl]
   );
 
   const togglePlayPause = useCallback(() => {
