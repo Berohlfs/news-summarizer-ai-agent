@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import type { ResponseInputItem } from "openai/resources/responses/responses";
-import { fetchArticle } from "@/app/components/fetch-article";
+import { fetchArticle } from "@/app/api/helpers/fetch-article";
 
 const tools: OpenAI.Responses.Tool[] = [
   {
