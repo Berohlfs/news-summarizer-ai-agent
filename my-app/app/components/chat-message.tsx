@@ -53,6 +53,19 @@ export function ChatMessage({ message }: ChatMessageProps) {
         >
           {isUser ? (
             message.content
+          ) : !message.content ? (
+            <span className="flex items-center gap-1 py-0.5">
+              {[0, 1, 2].map((i) => (
+                <span
+                  key={i}
+                  className="size-1.5 rounded-full bg-current opacity-30"
+                  style={{
+                    animation: "dot-pulse 1.4s ease-in-out infinite",
+                    animationDelay: `${i * 0.2}s`,
+                  }}
+                />
+              ))}
+            </span>
           ) : (
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
@@ -104,7 +117,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
             </ReactMarkdown>
           )}
         </div>
-        {!isUser && (
+        {!isUser && message.content && (
           <Button
             variant="ghost"
             size="xs"
