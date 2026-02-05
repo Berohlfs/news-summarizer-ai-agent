@@ -25,29 +25,56 @@ A sleek, real-time AI chatbot that summarizes news articles and reads them aloud
 ## How It Works
 
 ```mermaid
-flowchart TD
-    subgraph Client
-        Input[Chat Input]
-        MD[Markdown Renderer]
-        AP[Audio Player]
+block-beta
+    columns 7
+
+    space:7
+    space:7
+
+    block:Client:7
+        columns 7
+        space
+        Input["Chat Input"]:1
+        space
+        MD["Markdown Renderer"]:1
+        space
+        AP["Audio Player"]:1
+        space
     end
 
-    subgraph API["Next.js API"]
-        Chat["/api/chat"]
-        TTS["/api/tts"]
-        Fetch[fetch_article] <-- "tool call loop" --> Chat
-        Fetch --> Jina[Jina API]
+    space:7
+    space:7
+
+    block:API["Next.js API"]:7
+        columns 7
+        space
+        Chat["/api/chat"]:1
+        space
+        Fetch["fetch_article → Jina API"]:1
+        space
+        TTS["/api/tts"]:1
+        space
     end
 
-    subgraph OpenAI
-        GPT[gpt-4o-mini]
-        Voice[tts-1]
+    space:7
+    space:7
+
+    block:OAI["OpenAI"]:7
+        columns 7
+        space
+        GPT["gpt-4o-mini"]:1
+        space:3
+        Voice["tts-1"]:1
+        space
     end
 
-    Input -- message --> Chat
-    Chat -- SSE stream --> MD
-    AP <-- audio --> TTS
+    space:7
+    space:7
 
+    Input -- "message" --> Chat
+    Chat -- "SSE stream" --> MD
+    Chat <-- "tool call loop" --> Fetch
+    AP <-- "audio" --> TTS
     Chat <--> GPT
     TTS --> Voice
 ```
@@ -61,7 +88,7 @@ flowchart TD
 | Styling   | Tailwind CSS v4, Radix UI, shadcn/ui             |
 | AI        | OpenAI SDK (`gpt-4o-mini` + `tts-1`)             |
 | Extraction| Jina API for article content                     |
-| Package   | pnpm                                             |
+| Package Manager   | pnpm                                             |
 
 ## Getting Started
 
@@ -120,7 +147,3 @@ my-app/
 ├── components/ui/                # shadcn/ui primitives
 └── lib/utils.ts
 ```
-
-## License
-
-[MIT](LICENSE)
