@@ -20,7 +20,7 @@ export function ChatInput({ onSend, isLoading }: ChatInputProps) {
     }
   }, [isLoading]);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     const trimmed = input.trim();
     if (!trimmed || isLoading) return;

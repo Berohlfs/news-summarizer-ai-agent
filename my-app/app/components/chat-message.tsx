@@ -35,7 +35,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
     <div className={cn("flex w-full", isUser ? "justify-end" : "justify-start")}>
       <div
         className={cn(
-          "flex max-w-[80%] flex-col gap-1",
+          "flex min-w-0 max-w-[85%] flex-col gap-1",
           isUser ? "items-end" : "items-start"
         )}
       >
@@ -45,11 +45,12 @@ export function ChatMessage({ message }: ChatMessageProps) {
         </span>
         <div
           className={cn(
-            "rounded-2xl px-4 py-2.5 text-sm leading-relaxed",
+            "max-w-full rounded-2xl px-4 py-2.5 text-sm leading-relaxed",
             isUser
               ? "bg-primary text-primary-foreground"
               : "bg-muted text-foreground"
           )}
+          style={{ overflowWrap: "anywhere", wordBreak: "break-word" }}
         >
           {isUser ? (
             message.content
