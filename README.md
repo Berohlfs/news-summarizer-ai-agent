@@ -1,4 +1,4 @@
-# News Summarizer AI
+# News Summarizer AI Agent
 
 A sleek, real-time AI chatbot that summarizes news articles and reads them aloud — powered by OpenAI, built with Next.js.
 
